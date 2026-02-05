@@ -62,6 +62,8 @@ sendConfiguration(ConstElementPtr config) {
 
         if (proc_name == "kea-dhcp4") {
             config_type = "Dhcp4";
+        } else if (proc_name == "kea-dhcp6") {
+            config_type = "Dhcp6";
         } else if (proc_name == "kea-dhcp-ddns") {
             config_type = "DhcpDdns";
         } else if (proc_name == "kea-ctrl-agent") {
@@ -95,6 +97,17 @@ extern "C" {
 
 int
 dhcp4_srv_configured(CalloutHandle& handle) {
+    if (!enabled) {
+        return (0);
+    }
+
+    ConstElementPtr json_config_ptr;
+    handle.getArgument("json_config", json_config_ptr);
+    return sendConfiguration(json_config_ptr);
+}
+
+int
+dhcp6_srv_configured(CalloutHandle& handle) {
     if (!enabled) {
         return (0);
     }

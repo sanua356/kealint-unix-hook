@@ -8,8 +8,6 @@
 #include <hooks/library_handle.h>
 #include <process/daemon.h>
 
-#include <filesystem>
-#include <regex>
 #include <string>
 #include <vector>
 
@@ -31,7 +29,8 @@ extern "C" {
 int
 load(isc::hooks::LibraryHandle& handle) {
     std::string proc_name = Daemon::getProcName();
-    if (proc_name != "kea-dhcp4" && proc_name != "kea-dhcp-ddns" && proc_name != "kea-ctrl-agent") {
+    if (proc_name != "kea-dhcp4" && proc_name != "kea-dhcp6" && proc_name != "kea-dhcp-ddns" &&
+        proc_name != "kea-ctrl-agent") {
         isc_throw(isc::Unexpected,
                   "Bad process name: " << proc_name
                                        << ", expected kea-dhcp4, kea-dhcp-ddns or kea-ctrl-agent");

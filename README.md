@@ -7,10 +7,10 @@ This repository provides a layer of compatibility between KEA DHCP and KEALint, 
 More information about [KEALint](https://github.com/sanua356/KEALint) can be found here.
 
 ## Service Info
-The hook is implemented for `kea-dhcp4`, `kea-dhcp-ddns` and `kea-ctrl-agent` services.
+The hook is implemented for `kea-dhcp4`, `kea-dhcp6`, `kea-dhcp-ddns` and `kea-ctrl-agent` services.
 
 > [!WARNING]  
-> The `kea-dhcp4` and `kea-dhcp-ddns` services send configuration updates to the UNIX socket when they are changed. But the `kea-ctrl-agent` configuration sends configuration changes only when the 'config-write' event occurs. These are limitations of the algorithm implementation.
+> The `kea-dhcp4`, `kea-dhcp6` and `kea-dhcp-ddns` services send configuration updates to the UNIX socket when they are changed. But the `kea-ctrl-agent` configuration sends configuration changes only when the 'config-write' event occurs. These are limitations of the algorithm implementation.
 
 ## Parameters
 
