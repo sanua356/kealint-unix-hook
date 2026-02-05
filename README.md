@@ -2,10 +2,13 @@
 
 ## Introduction
 
-This repository provides a layer of compatibility between KEA DHCP and KEALint, which allows you to verify the correctness of configurations when configuration settings change.
+This repository provides a layer of compatibility between KEA DHCP and KEALint, which allows you to verify the correctness of configurations when configuration settings change. The hook sends new KEA server configurations to the UNIX socket when they are changed.
 
 ## Service Info
 The hook is implemented for `kea-dhcp4`, `kea-dhcp-ddns` and `kea-ctrl-agent` services.
+
+> [!WARNING]  
+> The `kea-dhcp4` and `kea-dhcp-ddns` services send configuration updates to the UNIX socket when they are changed. But the `kea-ctrl-agent` configuration sends configuration changes only when the 'config-write' event occurs. These are limitations of the algorithm implementation.
 
 ## Parameters
 
