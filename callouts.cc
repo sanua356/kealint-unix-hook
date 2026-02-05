@@ -114,4 +114,47 @@ d2_srv_configured(CalloutHandle& handle) {
     handle.getArgument("json_config", json_config_ptr);
     return sendConfiguration(json_config_ptr);
 }
+
+// The described method of getting the Control Agent configuration is a bad one. But the
+// "ca_srv_configured" method is not implemented.
+int
+http_response(CalloutHandle& handle) {
+    if (!enabled) {
+        return (0);
+    }
+
+    isc::http::HttpRequestPtr request_ptr;
+    handle.getArgument("request", request_ptr);
+    ElementPtr request_body = Element::fromJSON(request_ptr->getBody());
+
+    if (request_body->get("command")->stringValue() != "config-write") {
+        return (0);
+    }
+
+    isc::http::HttpResponseJsonPtr response_ptr;
+    handle.getArgument("response", response_ptr);
+    ElementPtr response_body = Element::fromJSON(response_ptr->getBody());
+
+    for (auto& el : response_body->listValue()) {
+        if (el->getType() == Element::map) {
+            if (el->get("result")->intValue() != 0) {
+                continue;
+            }
+
+            std::string file_path = el->get("arguments")->get("filename")->stringValue();
+
+            try {
+                ElementPtr config_json = Element::fromJSONFile(file_path);
+                if (config_json->contains("Control-agent")) {
+                    return sendConfiguration(config_json->get("Control-agent"));
+                }
+
+            } catch (const std::exception& e) {
+                LOG_ERROR(kealint_unix_logger, KEALINT_UNIX_UNEXPECTED_ERROR).arg(e.what());
+            }
+        }
+    }
+
+    return (0);
+}
 }  // namespace isc
