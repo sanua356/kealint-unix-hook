@@ -12,6 +12,9 @@ The hook is implemented for `kea-dhcp4`, `kea-dhcp6`, `kea-dhcp-ddns` and `kea-c
 > [!WARNING]  
 > The `kea-dhcp4`, `kea-dhcp6` and `kea-dhcp-ddns` services send configuration updates to the UNIX socket when they are changed. But the `kea-ctrl-agent` configuration sends configuration changes only when the 'config-write' event occurs. These are limitations of the algorithm implementation.
 
+> [!WARNING]
+> The sended to UNIX socket configuration is not redacted, i.e. it contains database passwords in plain text, if those were specified in the original configuration. Care should be taken not to expose the UNIX socket to unprivileged users.
+
 ## Parameters
 
 `enabled` - Boolean type. Determines whether data will be sent to KEALint for verification.
