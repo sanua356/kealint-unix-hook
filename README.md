@@ -19,7 +19,7 @@ The hook is implemented for `kea-dhcp4`, `kea-dhcp6`, `kea-dhcp-ddns` and `kea-c
 
 `enabled` - Boolean type. Determines whether data will be sent to KEALint for verification.
 
-`scoket-path` -  String type. Defines the path to the UNIX socket to which the KEA server configurations will be sent when they are changed.
+`soсket-path` -  String type. Defines the path to the UNIX socket to which the KEA server configurations will be sent when they are changed.
 
 ## Example configuration
 ```json
